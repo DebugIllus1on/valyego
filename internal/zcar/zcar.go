@@ -1,10 +1,15 @@
 package zcar
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
@@ -67,8 +72,27 @@ func run() error {
 	// 打印 Log
 	fmt.Println("[runtime] start the server")
 	// 运行 HTTP 服务
-	if err := httpsrv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
-		log.Fatal(err.Error())
+	go func() {
+		if err := httpsrv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+			log.Fatal(err.Error())
+		}
+	}()
+
+	// 创建退出等待信号
+	quit := make(chan os.Signal, 1)
+	// 等待给定的信号
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	// 等待退出信号
+	<-quit
+
+	// 创建 context
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	// 关闭服务
+	if err := httpsrv.Shutdown(ctx); err != nil {
+		// TODO: 处理错误日志
+		return err
 	}
 
 	return nil
