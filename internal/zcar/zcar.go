@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/valyego/internal/pkg/middlewares"
 	"github.com/valyego/internal/zcar/router"
 )
 
@@ -56,6 +57,8 @@ func run() error {
 	// 默认使用 Gin Recovery 中间件
 	g.Use(gin.Logger(), gin.Recovery())
 
+	// 加载中间件
+	g.Use(middlewares.XRequestID())
 	// 加载路由
 	router.Routes(g)
 

@@ -2,14 +2,18 @@
 
 ### 依赖包
 ```bash
-# swagger
+# swagger :undo:
 go install github.com/go-swagger/go-swagger/cmd/swagger@latest
+
 # LICENSE 文件
 go install github.com/nishanths/license/v5@latest
 license -list # 查看支持的代码协议
 $ license -n 'Illus1onnn <1161524405@qq.com>' -o LICENSE mit # 项目根目录下执行
+
 # Gin Http 框架
 go get github.com/gin-gonic/gin
+# UUID
+go get github.com/google/uuid
 ```
 
 ### 编译和运行 Zcar 应用
