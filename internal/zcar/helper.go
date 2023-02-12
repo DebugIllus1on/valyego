@@ -27,3 +27,7 @@ func initConfig() {
 		fmt.Fprintln(os.Stdout, "[runtime] using config file >>", viper.ConfigFileUsed())
 	}
 }
+
+func initRoutes() {
+
+}

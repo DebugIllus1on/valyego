@@ -1,15 +1,21 @@
 package zcar
 
 import (
+	"errors"
 	"fmt"
+	"log"
+	"net/http"
 
+	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
+	"github.com/valyego/internal/zcar/router"
 )
 
 // 设置配置文件路径
 var configFile = "configs/zcar.yaml"
 
-func NewCommand() *cobra.Command {
+func NewZcarAppCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		// 命令名
 		Use: "zcar",
@@ -42,6 +48,25 @@ func NewCommand() *cobra.Command {
 
 // run 函数是实际的业务代码入口函数
 func run() error {
+	// 设置 Gin 启动模式
+	gin.SetMode(viper.GetString("runmode"))
+	// 创建 Gin 引擎
+	g := gin.New()
+	// 默认使用 Gin 日志
+	// 默认使用 Gin Recovery 中间件
+	g.Use(gin.Logger(), gin.Recovery())
+
+	// 加载路由
+	router.Routes(g)
+
+	// 创建 HTTP 服务实例
+	httpsrv := &http.Server{Addr: viper.GetString("addr"), Handler: g}
+	// 打印 Log
+	fmt.Println("[runtime] start the server")
+	// 运行 HTTP 服务
+	if err := httpsrv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+		log.Fatal(err.Error())
+	}
 
 	return nil
 }
