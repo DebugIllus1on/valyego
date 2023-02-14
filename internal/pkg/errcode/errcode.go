@@ -21,3 +21,7 @@ func (errcode *Errcode) Error() string {
 func (errcode *Errcode) SetMessage(stdfmt string, args ...interface{}) {
 	errcode.Message = fmt.Sprintf(stdfmt, args...)
 }
+
+func Decode(err error) (int, string, string) {
+	return 0, "", ""
+}
