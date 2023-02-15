@@ -6,6 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const GroupName = "zcar"
+
 // Routes 路由
 func Routes(ctx *gin.Engine) {
 	// 注册 404 Handler
@@ -14,7 +16,9 @@ func Routes(ctx *gin.Engine) {
 			"code": "100001", "message": "router not found.",
 		})
 	})
-	appgroup := ctx.Group("/zcar")
+
+	// 路由组
+	appgroup := ctx.Group(GroupName)
 
 	// 注册路由
 	appgroup.GET("", func(ctx *gin.Context) {
