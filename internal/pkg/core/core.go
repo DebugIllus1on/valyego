@@ -14,20 +14,14 @@ type errResponse struct {
 
 // WriteResponse 错误写入到响应
 func WriteResponse(ctx *gin.Context, err error, data interface{}) {
-	if err != nil {
-		httpcode, appcode, message := errcode.Decode(err)
-		ctx.JSON(httpcode, errResponse{
-			Code:    appcode,
-			Message: message,
-			Data:    nil,
-		})
-
-		return
+	if err == nil {
+		err = errcode.OK
 	}
 
-	ctx.JSON(errcode.OK.HTTP, errResponse{
-		Code:    errcode.OK.Code,
-		Message: errcode.OK.Message,
+	httpcode, appcode, message := errcode.Decode(err)
+	ctx.JSON(httpcode, errResponse{
+		Code:    appcode,
+		Message: message,
 		Data:    data,
 	})
 }
