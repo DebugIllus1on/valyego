@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/valyego/internal/pkg/core"
 )
 
 const GroupName = "zcar"
@@ -28,8 +29,9 @@ func Routes(ctx *gin.Engine) {
 	})
 
 	appgroup.GET("/healthz", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"status": "ok",
+		// ! 响应器测试通过即将删除
+		core.WriteResponse(ctx, nil, []interface{}{
+			"hello", "world",
 		})
 	})
 }
