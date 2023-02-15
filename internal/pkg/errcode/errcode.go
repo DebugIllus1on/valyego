@@ -2,22 +2,26 @@ package errcode
 
 import "fmt"
 
+// Errcode 自定义错误
 type Errcode struct {
 	HTTP    int
 	Code    string
 	Message string
 }
 
+// NewErrcode 构造函数
 func NewErrcode(HTTP int, Code string, Message string) *Errcode {
 	return &Errcode{
 		HTTP, Code, Message,
 	}
 }
 
+// Error 实现 error 的 Error 方法
 func (errcode *Errcode) Error() string {
 	return errcode.Message
 }
 
+// SetMessage 设置错误信息
 func (errcode *Errcode) SetMessage(stdfmt string, args ...interface{}) {
 	errcode.Message = fmt.Sprintf(stdfmt, args...)
 }
