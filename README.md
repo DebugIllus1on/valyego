@@ -14,6 +14,10 @@ $ license -n 'Illus1onnn <1161524405@qq.com>' -o LICENSE mit # 项目根目录�
 go get github.com/gin-gonic/gin
 # UUID
 go get github.com/google/uuid
+# Cobra 命令行工具
+github.com/spf13/cobra v1.6.1
+# Viper 配置
+github.com/spf13/viper v1.15.0
 ```
 
 ### 编译和运行 Zcar 应用
