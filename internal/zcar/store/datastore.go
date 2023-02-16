@@ -17,7 +17,7 @@ type datastore struct {
 }
 
 // NewStore 创建 IStore 实例
-func NewStore(dbc *gorm.DB) *datastore {
+func NewDataStore(dbc *gorm.DB) *datastore {
 	once.Do(func() {
 		D = &datastore{dbc}
 	})
