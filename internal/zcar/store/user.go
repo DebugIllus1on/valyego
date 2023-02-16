@@ -1,6 +1,6 @@
 package store
 
-import "github.com/jinzhu/gorm"
+import "gorm.io/gorm"
 
 // UserStore 定义了 user 在 Store 层需实现的方法
 type UserStore interface {

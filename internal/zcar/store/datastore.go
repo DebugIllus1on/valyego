@@ -3,7 +3,7 @@ package store
 import (
 	"sync"
 
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 var (
@@ -25,7 +25,7 @@ func NewStore(dbc *gorm.DB) *datastore {
 	return D
 }
 
-// 检查是否已经实现 IStore 
+// 检查是否已经实现 IStore
 var _ IStore = (*datastore)(nil)
 
 func (ds *datastore) User() UserStore {
