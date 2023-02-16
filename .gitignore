@@ -63,4 +63,6 @@ tags
 
 # extra
 /_output
+
+configs/*
 !configs/example.yaml
