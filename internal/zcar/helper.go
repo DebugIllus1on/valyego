@@ -47,7 +47,7 @@ func initStore() error {
 		return err
 	}
 
-	_ = store.NewStore(ins)
+	_ = store.NewDataStore(ins)
 	fmt.Fprintln(os.Stderr, "[runtime] mysql connected")
 
 	return nil
