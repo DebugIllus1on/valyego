@@ -54,6 +54,11 @@ func NewZcarAppCommand() *cobra.Command {
 
 // run 函数是实际的业务代码入口函数
 func run() error {
+	// 初始化 Store 数据层
+	if err := initStore(); err != nil {
+		return nil
+	}
+
 	// 设置 Gin 启动模式
 	gin.SetMode(viper.GetString("runmode"))
 	// 创建 Gin 引擎
