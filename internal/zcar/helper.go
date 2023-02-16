@@ -5,6 +5,8 @@ import (
 	"os"
 
 	"github.com/spf13/viper"
+	"github.com/valyego/internal/zcar/store"
+	"github.com/valyego/pkg/db"
 )
 
 const ()
@@ -26,6 +28,29 @@ func initConfig() {
 		// 打印当前使用的配置文件
 		fmt.Fprintln(os.Stdout, "[runtime] using config file >>", viper.ConfigFileUsed())
 	}
+}
+
+func initStore() error {
+	dbOptions := &db.DatabaseOptions{
+		Host:                  viper.GetString("db.host"),
+		Username:              viper.GetString("db.username"),
+		Password:              viper.GetString("db.password"),
+		Database:              viper.GetString("db.database"),
+		MaxIdleConnections:    viper.GetInt("db.max-idle-connections"),
+		MaxOpenConnections:    viper.GetInt("db.max-open-connections"),
+		MaxConnectionLifeTime: viper.GetDuration("db.max-connection-life-time"),
+		LogLevel:              viper.GetInt("db.log-level"),
+	}
+
+	ins, err := db.NewDatabase(dbOptions)
+	if err != nil {
+		return err
+	}
+
+	_ = store.NewStore(ins)
+	fmt.Fprintln(os.Stderr, "[runtime] mysql connected")
+
+	return nil
 }
 
 func initRoutes() {
