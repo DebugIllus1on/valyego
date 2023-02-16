@@ -5,7 +5,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/valyego/internal/pkg/core"
-	"github.com/valyego/internal/zcar/controller/v1/example"
 	"github.com/valyego/internal/zcar/controller/v1/user"
 	"github.com/valyego/internal/zcar/store"
 )
@@ -25,9 +24,6 @@ func Routes(ctx *gin.Engine) {
 	appgroup := ctx.Group(GroupName)
 
 	// 注册路由
-	exampleCtrl := example.New()
-	appgroup.GET("/example", exampleCtrl.Index)
-
 	userCtrl := user.New(store.D)
 	appgroup.GET("/users", userCtrl.Index)
 
