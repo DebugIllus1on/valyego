@@ -1,10 +1,13 @@
 package biz
 
-import "github.com/valyego/internal/zcar/store"
+import (
+	"github.com/valyego/internal/zcar/biz/user"
+	"github.com/valyego/internal/zcar/store"
+)
 
 type IBiz interface {
 	// TODO: 业务层接口实现
-	User()
+	User() user.UserBiz
 }
 
 var _ IBiz = (*biz)(nil)
@@ -17,6 +20,6 @@ func NewBiz(ds store.IStore) *biz {
 	return &biz{ds}
 }
 
-func (b *biz) User() {
-	return
+func (b *biz) User() user.UserBiz {
+	return user.New(b.ds)
 }
